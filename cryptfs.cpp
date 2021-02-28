@@ -1363,7 +1363,7 @@ static int create_crypto_blk_dev_hw(struct crypt_mnt_ftr* crypt_ftr, const unsig
       load_count = load_crypto_mapping_table(crypt_ftr, master_key, real_blk_name, name, fd,
                                            extra_params);
     }
-    
+
     if (load_count < 0) {
         SLOGE("Cannot load dm-crypt mapping table.\n");
         goto errout;
@@ -2136,7 +2136,7 @@ static int test_mount_hw_encrypted_fs(struct crypt_mnt_ftr* crypt_ftr,
                 }
 #endif
             } else {
-                if (create_crypto_blk_dev(crypt_ftr, decrypted_master_key,
+                if (create_crypto_blk_dev_hw(crypt_ftr, decrypted_master_key,
                                           real_blkdev.c_str(), &crypto_blkdev, label, 0)) {
                     SLOGE("Error creating decrypted block device");
                     rc = -1;
@@ -2914,7 +2914,7 @@ int cryptfs_enable_internal(int crypt_type, const char* passwd, int no_ui) {
                           CRYPTO_BLOCK_DEVICE, 0);
 #endif
     else
-      create_crypto_blk_dev(&crypt_ftr, decrypted_master_key, real_blkdev.c_str(), &crypto_blkdev,
+      create_crypto_blk_dev_hw(&crypt_ftr, decrypted_master_key, real_blkdev.c_str(), &crypto_blkdev,
                           CRYPTO_BLOCK_DEVICE, 0);
 #else
     create_crypto_blk_dev(&crypt_ftr, decrypted_master_key, real_blkdev.c_str(), &crypto_blkdev,
